@@ -1,8 +1,10 @@
 import * as React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
+import Button from "./components/Button";
 import List from "./components/List";
 import ListItem from "./components/ListItem";
+import Filter from "./Filter";
 import { TodoItemInterface, defaultTodoContext } from "./TodoContext";
 
 const Header = styled.header`
@@ -41,32 +43,16 @@ const Footer = styled.footer`
   align-items: center;
   padding: 1rem;
   border-radius: 0 0 4px 4px;
-
-  button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-family: "Josefin Sans", sans-serif;
-  }
-
-  #button-group {
-    display: flex;
-    gap: 10px;
-
-    > .active {
-      color: blue;
-    }
-  }
 `;
+
+export type FilterType = "all" | "active" | "completed";
 
 const App = () => {
   const [completed, setCompleted] = React.useState<boolean>(false);
   const [title, setTitle] = React.useState<string>("");
   const [todos, setTodos] =
     React.useState<TodoItemInterface[]>(defaultTodoContext);
-  const [filter, setFilter] = React.useState<"all" | "active" | "completed">(
-    "all"
-  );
+  const [filter, setFilter] = React.useState<FilterType>("all");
 
   const handleCompletedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCompleted(e.target.checked);
@@ -147,33 +133,12 @@ const App = () => {
           ))}
         </List>
       ) : (
-        <p>no items</p>
+        null
       )}
       <Footer>
         <span>{itemsLeft} items left</span>
-        <div id="button-group">
-          <button
-            className={filter === "all" ? "active" : ""}
-            onClick={() => setFilter("all")}
-          >
-            All
-          </button>
-          <button
-            className={filter === "active" ? "active" : ""}
-            onClick={() => setFilter("active")}
-          >
-            Active
-          </button>
-          <button
-            className={filter === "completed" ? "active" : ""}
-            onClick={() => setFilter("completed")}
-          >
-            Completed
-          </button>
-        </div>
-        <button id="clear" onClick={clearCompletedTodos}>
-          Clear Completed
-        </button>
+        <Filter filter={filter} setFilter={setFilter} />
+        <Button onClick={clearCompletedTodos}>Clear Completed</Button>
       </Footer>
     </AppContainer>
   );

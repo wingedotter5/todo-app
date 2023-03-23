@@ -107,8 +107,8 @@ const App = () => {
     }
   };
 
-  const clearTodos = () => {
-    setTodos([]);
+  const clearCompletedTodos = () => {
+    setTodos((prevTodos) => prevTodos.filter((todo) => !todo.completed));
   };
 
   const itemsLeft = todos.reduce(
@@ -171,7 +171,7 @@ const App = () => {
             Completed
           </button>
         </div>
-        <button id="clear" onClick={clearTodos}>
+        <button id="clear" onClick={clearCompletedTodos}>
           Clear Completed
         </button>
       </Footer>

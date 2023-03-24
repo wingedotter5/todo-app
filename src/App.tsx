@@ -6,17 +6,17 @@ import List from "./components/List";
 import ListItem from "./components/ListItem";
 import Filter from "./Filter";
 import { TodoItemInterface, defaultTodoContext } from "./TodoContext";
+import DesktopBackgroundLight from "./assets/images/bg-desktop-light.jpg";
+import Checkbox from "./components/Checkbox";
 
-const Header = styled.header`
-  h1 {
-    color: white;
-  }
-  margin-bottom: 20px;
+const StyledComponent = styled.div`
+  background: #242424 url(${DesktopBackgroundLight}) 0 0 / 100% 300px no-repeat;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
 `;
 
-const AppContainer = styled.div`
-  // max-width: 600px;
-  padding: 1rem;
+const Main = styled.main`
   #input-group {
     display: flex;
     align-items: center;
@@ -27,13 +27,26 @@ const AppContainer = styled.div`
     margin-bottom: 20px;
 
     > input[type="text"] {
-      width: 100%;
       font-size: 18px;
       font-family: "Josefin Sans", sans-serif;
       border: none;
       outline: none;
     }
   }
+
+  max-width: 600px;
+  padding-top: 100px;
+
+  @media screen and (max-width: 375px) {
+    padding-top: 50px;
+  }
+`;
+
+const Header = styled.header`
+  h1 {
+    color: white;
+  }
+  margin-bottom: 20px;
 `;
 
 const Footer = styled.footer`
@@ -105,44 +118,40 @@ const App = () => {
   const todosToRender = React.useMemo(getTodosToRender, [filter, todos]);
 
   return (
-    <AppContainer>
-      <Header>
-        <h1>TODO</h1>
-      </Header>
-      <div id="input-group">
-        <input
-          type="checkbox"
-          checked={completed}
-          onChange={handleCompletedChange}
-        />
-        <input
-          type="text"
-          placeholder="Create a new todo..."
-          onChange={handleTitleChange}
-          value={title}
-          onKeyDown={handleKeyDown}
-        />
-      </div>
-      {todosToRender.length > 0 ? (
-        <List>
-          {todosToRender.map((todo, i) => (
-            <ListItem
-              key={i}
-              todo={todo}
-              handleTodoToggle={handleTodoToggle}
-              removeTodo={removeTodo}
-            />
-          ))}
-        </List>
-      ) : (
-        null
-      )}
-      <Footer>
-        <span>{itemsLeft} items left</span>
-        <Filter filter={filter} setFilter={setFilter} />
-        <Button onClick={clearCompletedTodos}>Clear Completed</Button>
-      </Footer>
-    </AppContainer>
+    <StyledComponent>
+      <Main>
+        <Header>
+          <h1>TODO</h1>
+        </Header>
+        <div id="input-group">
+          <Checkbox checked={completed} onChange={handleCompletedChange} />
+          <input
+            type="text"
+            placeholder="Create a new todo..."
+            onChange={handleTitleChange}
+            value={title}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
+        {todosToRender.length > 0 ? (
+          <List>
+            {todosToRender.map((todo, i) => (
+              <ListItem
+                key={i}
+                todo={todo}
+                handleTodoToggle={handleTodoToggle}
+                removeTodo={removeTodo}
+              />
+            ))}
+          </List>
+        ) : null}
+        <Footer>
+          <span>{itemsLeft} items left</span>
+          <Filter filter={filter} setFilter={setFilter} />
+          <Button onClick={clearCompletedTodos}>Clear Completed</Button>
+        </Footer>
+      </Main>
+    </StyledComponent>
   );
 };
 export default App;

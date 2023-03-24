@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { TodoItemInterface } from "../TodoContext";
+import Checkbox from "./Checkbox";
 
 interface StyledComponentProps {
   completed: boolean;
@@ -17,13 +18,9 @@ const StyledComponent = styled.li<StyledComponentProps>`
     align-items: center;
     gap: 20px;
 
-    input,
     span {
-      cursor: pointer;
-    }
-
-    > span {
       text-decoration: ${(props) => (props.completed ? "line-through" : "")};
+      cursor: pointer;
     }
   }
 
@@ -46,8 +43,7 @@ const ListItem = ({ todo, handleTodoToggle, removeTodo }: ListItemProps) => {
   return (
     <StyledComponent completed={todo.completed}>
       <label>
-        <input
-          type="checkbox"
+        <Checkbox
           checked={todo.completed}
           onChange={() => handleTodoToggle(todo.id)}
         />

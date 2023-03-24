@@ -82,7 +82,7 @@ const App = () => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
 
-  const todosToRender = () => {
+  const getTodosToRender = () => {
     switch (filter) {
       case "active":
         return todos.filter((todo) => !todo.completed);
@@ -101,6 +101,8 @@ const App = () => {
     (total, todo) => (todo.completed ? total : total + 1),
     0
   );
+
+  const todosToRender = React.useMemo(getTodosToRender, [filter, todos]);
 
   return (
     <AppContainer>
@@ -121,9 +123,9 @@ const App = () => {
           onKeyDown={handleKeyDown}
         />
       </div>
-      {todosToRender().length > 0 ? (
+      {todosToRender.length > 0 ? (
         <List>
-          {todosToRender().map((todo, i) => (
+          {todosToRender.map((todo, i) => (
             <ListItem
               key={i}
               todo={todo}

@@ -9,6 +9,7 @@ const Button = styled.button<ButtonProps>`
   border: none;
   cursor: pointer;
   font-family: "Josefin Sans", sans-serif;
-  color: ${(props) => (props.active ? "blue" : "")};
+  color: ${(props) =>
+    props.active ? "var(--bright-blue)" : "var(--list-color)"};
 `;
 export default Button;

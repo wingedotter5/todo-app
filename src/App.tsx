@@ -6,14 +6,16 @@ import List from "./components/List";
 import ListItem from "./components/ListItem";
 import Filter from "./Filter";
 import { TodoItemInterface, defaultTodoContext } from "./TodoContext";
-import DesktopBackgroundLight from "./assets/images/bg-desktop-light.jpg";
 import Checkbox from "./components/Checkbox";
 
 const StyledComponent = styled.div`
-  background: #242424 url(${DesktopBackgroundLight}) 0 0 / 100% 300px no-repeat;
+  background: var(--background-color) var(--background-image) 0 0 / 100%
+    var(--background-image-height) no-repeat;
   display: flex;
   justify-content: center;
   padding: 0 1rem;
+  min-height: 100vh;
+  color: var(--list-color);
 `;
 
 const Main = styled.main`
@@ -21,7 +23,7 @@ const Main = styled.main`
     display: flex;
     align-items: center;
     gap: 20px;
-    background-color: white;
+    background-color: var(--list-background-color);
     border-radius: 4px;
     padding: 1.5rem;
     margin-bottom: 20px;
@@ -31,10 +33,11 @@ const Main = styled.main`
       font-family: "Josefin Sans", sans-serif;
       border: none;
       outline: none;
+      background-color: var(--list-background-color);
+      color: var(--list-color);
     }
   }
 
-  max-width: 600px;
   padding-top: 100px;
 
   @media screen and (max-width: 375px) {
@@ -47,10 +50,22 @@ const Header = styled.header`
     color: white;
   }
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+
+  > button {
+    width: 26px;
+    height: 26px;
+    background: transparent var(--theme-toggle-button-background) center center
+      no-repeat;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
 `;
 
 const Footer = styled.footer`
-  background-color: white;
+  background-color: var(--list-background-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -59,6 +74,7 @@ const Footer = styled.footer`
 `;
 
 export type FilterType = "all" | "active" | "completed";
+type Theme = "light" | "dark";
 
 const App = () => {
   const [completed, setCompleted] = React.useState<boolean>(false);
@@ -66,6 +82,15 @@ const App = () => {
   const [todos, setTodos] =
     React.useState<TodoItemInterface[]>(defaultTodoContext);
   const [filter, setFilter] = React.useState<FilterType>("all");
+  const [theme, setTheme] = React.useState<Theme>("light");
+
+  React.useEffect(() => {
+    document.body.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  const changeTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
 
   const handleCompletedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCompleted(e.target.checked);
@@ -118,10 +143,11 @@ const App = () => {
   const todosToRender = React.useMemo(getTodosToRender, [filter, todos]);
 
   return (
-    <StyledComponent>
+    <StyledComponent theme={theme}>
       <Main>
         <Header>
           <h1>TODO</h1>
+          <button onClick={changeTheme} />
         </Header>
         <div id="input-group">
           <Checkbox checked={completed} onChange={handleCompletedChange} />

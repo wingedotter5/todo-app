@@ -1,6 +1,11 @@
 :root {
   font-family: "Josefin Sans", sans-serif;
 
+  --icon-check: url("./assets/images/icon-check.svg");
+  --icon-cross: url("./assets/images/icon-cross.svg");
+  --icon-moon: url("./assets/images/icon-moon.svg");
+  --icon-sun: url("./assets/images/icon-sun.svg");
+
   --bright-blue: hsl(220, 98%, 61%);
   --check-background: linear-gradient(
     to bottom right,
@@ -13,22 +18,50 @@
   --very-dark-desaturated-blue: hsl(235, 24%, 19%);
   --light-grayish-blue-hover: hsl(236, 33%, 92%);
   --very-dark-grayish-blue-1: hsl(237, 14%, 26%);
+  --background-image-height: 300px;
 }
 
 [data-theme="light"] {
   --light-grayish-blue: hsl(233, 11%, 84%);
   --dark-grayish-blue: hsl(236, 9%, 61%);
   --very-dark-grayish-blue: hsl(235, 19%, 35%);
+
+  --background-color: var(--very-light-grayish-blue);
+  --background-image: url("./assets/images/bg-desktop-light.jpg");
+  --list-background-color: white;
+  --list-color: var(--very-dark-grayish-blue-1);
+  --theme-toggle-button-background: var(--icon-moon);
 }
 
 [data-theme="dark"] {
   --light-grayish-blue: hsl(234, 39%, 85%);
   --dark-grayish-blue: hsl(234, 11%, 52%);
   --very-dark-grayish-blue: hsl(233, 14%, 35%);
+
+  --background-color: var(--very-dark-blue);
+  --background-image: url("./assets/images/bg-desktop-dark.jpg");
+  --list-background-color: var(--very-dark-desaturated-blue);
+  --list-color: var(--very-light-grayish-blue);
+  --theme-toggle-button-background: var(--icon-sun);
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  transition: all 0.5s ease;
+}
+
+@media screen and (max-width: 375px) {
+  :root {
+    --background-image-height: 200px;
+  }
+
+  [data-theme="light"] {
+    --background-image: url("./assets/images/bg-mobile-light.jpg");
+  }
+
+  [data-theme="dark"] {
+    --background-image: url("./assets/images/bg-mobile-dark.jpg");
+  }
 }

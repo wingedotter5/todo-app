@@ -15,11 +15,7 @@ const StyledComponent = styled.input`
     color: white;
     width: 20px;
     height: 20px;
-    background: linear-gradient(
-      to bottom right,
-      hsl(192, 100%, 67%),
-      hsl(280, 87%, 65%)
-    );
+    background: var(--check-background);
     position: absolute;
     display: flex;
     align-items: center;

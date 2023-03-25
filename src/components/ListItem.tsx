@@ -8,7 +8,7 @@ interface StyledComponentProps {
 
 const StyledComponent = styled.li<StyledComponentProps>`
   display: flex;
-  background-color: white;
+  background-color: var(--list-background-color);
   padding: 1.5rem;
   font-size: 18px;
   border-bottom: 1px solid lightgrey;
@@ -25,11 +25,12 @@ const StyledComponent = styled.li<StyledComponentProps>`
   }
 
   .remove-button {
-    margin-left: auto;
-    cursor: pointer;
+    width: 18px;
+    height: 18px;
     border: none;
-    background: transparent;
-    font-size: 18px;
+    cursor: pointer;
+    margin-left: auto;
+    background: transparent var(--icon-cross) center center no-repeat;
   }
 `;
 
@@ -49,9 +50,7 @@ const ListItem = ({ todo, handleTodoToggle, removeTodo }: ListItemProps) => {
         />
         <span>{todo.title}</span>
       </label>
-      <button className="remove-button" onClick={() => removeTodo(todo.id)}>
-        &times;
-      </button>
+      <button className="remove-button" onClick={() => removeTodo(todo.id)} />
     </StyledComponent>
   );
 };
